@@ -12,3 +12,18 @@ submitBtn.addEventListener("click", () => {
     sender: sender.value,
   });
 });
+
+socket.on("chat", (data) => {
+  feedback.innerHTML = "";
+  output.innerHTML +=
+    "<p><strong>" + data.sender + " : </strong>" + data.message + "</p>";
+  message.value = "";
+});
+
+message.addEventListener("keypress", () => {
+  socket.emit("typing", sender.value);
+});
+
+socket.on("typing", (data) => {
+  feedback.innerHTML = "<p>" + data + " yazıyor...  </p>";
+});
